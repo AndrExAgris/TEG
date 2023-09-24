@@ -5,8 +5,6 @@
 #include"bibflores.h"
 
 
-
-
 int main(int argc, char const *argv[])
 {   
     Vertice dados_csv[NUM_OCORRENCIAS];
@@ -84,14 +82,39 @@ int main(int argc, char const *argv[])
         }
     }
 
+
+    Lista_adjacencias lista;
+
+    int num_vertices = 0;
+    for (int i = 0; i < NUM_OCORRENCIAS; i++)
+    {
+        for (int j = i; j < NUM_OCORRENCIAS; j++)
+        {
+            if (grafo[i][j] != 0)
+            {
+                num_vertices += 1;
+                printf("%d, %d\n", i, j);
+                adicionar_lista(&lista, i, j);
+
+                
+            }
+        }
+    }
+    printf ("numero de vertices é %d\n", num_vertices);
+    
+
+
+
+
+    /*print matrizz pra verificação
     for(int i = 0 ; i < NUM_OCORRENCIAS ; i++ ){
 		for(int j = 0 ; j < NUM_OCORRENCIAS ; j++ ){
-			printf("%4d ", grafo[i][j]);
+		    printf("%4d ", grafo[i][j]);
 		}
-  	printf("\n");
-	  }
-	  printf("\n");
-
+  	    printf("\n");
+	}
+	printf("\n");
+    */
     return 0;
 }
 

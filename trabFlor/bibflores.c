@@ -12,6 +12,72 @@ double distancia_euclidiana(Vertice v1, Vertice v2) {
     return sqrt(sum);
 }
 
+Lista_adjacencias *cabeca = NULL;
+Lista_adjacencias *corrente = NULL;
+
+Lista_adjacencias * cria_lista(Lista_adjacencias *list, int va, int vb){
+	//aloca memoria
+	Lista_adjacencias *list = (Lista_adjacencias*) malloc(sizeof(struct Lista_adjacencias*));
+	if(list == NULL)
+	{	
+		printf("\nFalha ao alocar memoria\n");
+		return NULL;
+	}
+
+	//cria primeiro elemento da lista
+	list->verticea = va;
+	list->verticeb = vb;
+	list->pointer = NULL;
+
+	return list;
+}
+
+Lista_adjacencias * adicionar_lista(Lista_adjacencias *list, int a, int b){
+	//se estiver vazia cria a lista
+	if(cabeca == NULL)
+	{
+		return cria_lista(&list, a, b);
+	}
+
+	//aloca em memoria
+	Lista_adjacencias *list = (Lista_adjacencias*) malloc(sizeof(struct Lista_adjacencias*));
+
+	// verifica se houve falha na alocação de memória
+	if(list == NULL)
+	{
+		printf("\nFalha ao alocar memoria\n");
+		return NULL;
+	}
+
+	list->verticea = a;
+	list->verticeb = b;
+	list->pointer = NULL;
+
+	corrente->pointer = list;
+	corrente = list;
+
+	return list;
+}
+
+// função que imprime a lista
+void imprimir_lista(){
+	// variável ponteiro "aux" para percorrer a lista
+	// inicialmente aponta para a "cabeca"
+	Lista_adjacencias *aux = cabeca;
+
+	// enquanto "aux" for diferente de NULL
+	while(aux != NULL)
+	{
+		// imprime o valor
+		printf("%d, %d\n", aux->verticea, aux->verticeb);
+		// aponta para o próximo elemento da lista
+		aux = aux->pointer;
+	}
+}
+
+
+
+
 /*
 
 // Função para salvar o grafo em um arquivo TXT
