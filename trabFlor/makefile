@@ -1,5 +1,5 @@
 run: final
-	./final < IrisDataset.csv
+	./final < IrisDataset.csv > resultado
 
 final: main.c matriz.o 
 	gcc -o final main.c matriz.o  -lm

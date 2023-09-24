@@ -5,12 +5,12 @@
 void inicializa_matriz( Matriz *p, int l, int c ){
 	p->lin = l;
 	p->col = c;
-	p->dados = malloc( sizeof( int* ) * l );
+	p->dados = malloc( sizeof( float* ) * l );
 	int i, j;
 	for( i = 0 ; i < l ; i++ ){
-		p->dados[i] = malloc( sizeof( int ) * c );
+		p->dados[i] = malloc( sizeof( float ) * c );
 		for( j = 0 ; j < c ; j++ )
-			p->dados[i][j] = 0;
+			p->dados[i][j] = 0,0;
 	}
 }
 
@@ -19,7 +19,7 @@ void mostra_matriz( Matriz m ){
 	printf("Dados da matriz (%dx%d):\n", m.lin, m.col);
 	for( i = 0 ; i < m.lin ; i++ ){
 		for( j = 0 ; j < m.col ; j++ ){
-			printf("%4d ", m.dados[i][j]);
+			printf("%4f ", m.dados[i][j]);
 		}
 		printf("\n");
 	}
@@ -33,7 +33,7 @@ void libera_matriz( Matriz *p ){
 	free( p->dados );
 }
 
-int set_valor( Matriz *p, int i, int j, int v ){
+int set_valor( Matriz *p, int i, int j, float v ){
 	if( i >= p->lin || j >= p->col )
 		return ERRO_COORD_INVALIDA;
 	
@@ -41,7 +41,7 @@ int set_valor( Matriz *p, int i, int j, int v ){
 	return 1; // Sucesso;
 }
 
-int get_valor( Matriz m, int i, int j, int *p ){
+int get_valor( Matriz m, int i, int j, float *p ){
 	if( i >= m.lin || j >= m.col )
 		return ERRO_COORD_INVALIDA;
 	
@@ -59,7 +59,7 @@ int carrega_arquivo( char *nome, Matriz *p ){
 	inicializa_matriz( p, l, c );
 	for( i = 0 ; i < l ; i++ )
 		for( j = 0 ; j < c ; j++ )
-			fscanf( f , "%d", &p->dados[i][j] );
+			fscanf( f , "%f", &p->dados[i][j] );
 	
 	fclose( f );
 	return 1;
@@ -74,7 +74,7 @@ int salva_arquivo( char *nome, Matriz m ){
 	fprintf( f, "%d %d\n", m.lin, m.col);
 	for( i = 0 ; i < m.lin ; i++ ){
 		for( j = 0 ; j < m.col ; j++ ){
-			fprintf( f, "%4d ", m.dados[i][j]);
+			fprintf( f, "%4f", m.dados[i][j]);
 		}
 		fprintf( f, "\n");
 	}
