@@ -1,8 +1,8 @@
 run: final
-	./final < in
+	./final < IrisDataset.csv
 
-final: main.c Matriz.o 
-	gcc -o final main.c Matriz.o  -lm
+final: main.c matriz.o 
+	gcc -o final main.c matriz.o  -lm
 
-Matriz.o: Matriz.c Matriz.h
-	gcc -o Matriz.o Matriz.c -c -lm
+matriz.o: matriz.c matriz.h
+	gcc -o matriz.o matriz.c -c -lm
