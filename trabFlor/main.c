@@ -71,6 +71,7 @@ int main(int argc, char const *argv[])
     int grafo[NUM_OCORRENCIAS][NUM_OCORRENCIAS] = {0};
     
 
+    //cria a matriz de adjacencias
     for (int i = 0; i < NUM_OCORRENCIAS; i++)
     {
         for (int j = 0; j < NUM_OCORRENCIAS; j++)
@@ -83,38 +84,37 @@ int main(int argc, char const *argv[])
     }
 
 
-    Lista_adjacencias lista;
-
-    int num_vertices = 0;
+    //conta quantas arestas tem
+    int num_arestas = 0;
     for (int i = 0; i < NUM_OCORRENCIAS; i++)
     {
         for (int j = i; j < NUM_OCORRENCIAS; j++)
         {
             if (grafo[i][j] != 0)
             {
-                num_vertices += 1;
-                printf("%d, %d\n", i, j);
-                adicionar_lista(&lista, i, j);
-
-                
+                num_arestas += 1;     
             }
         }
     }
-    printf ("numero de vertices é %d\n", num_vertices);
+
+    //cria um vetor e armazena a lista de adjacencias
+    Aresta arestas[num_arestas];
+    int aux=0;
+    for (int i = 0; i < NUM_OCORRENCIAS; i++)
+    {
+        for (int j = i; j < NUM_OCORRENCIAS; j++)
+        {
+            if (grafo[i][j] != 0)
+            {
+                arestas[aux].verticea = i;
+                arestas[aux].verticeb = j;
+                aux += 1;
+            }
+        }
+    }
+
+    salva_arquivo_arestas(num_arestas, arestas);
     
-
-
-
-
-    /*print matrizz pra verificação
-    for(int i = 0 ; i < NUM_OCORRENCIAS ; i++ ){
-		for(int j = 0 ; j < NUM_OCORRENCIAS ; j++ ){
-		    printf("%4d ", grafo[i][j]);
-		}
-  	    printf("\n");
-	}
-	printf("\n");
-    */
     return 0;
 }
 

@@ -1,5 +1,5 @@
 run: final
-	./final > resultado
+	./final
 
 final: main.c bibflores.o 
 	gcc -o final main.c bibflores.o  -lm
