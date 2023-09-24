@@ -1,65 +1,97 @@
 #include<stdio.h>
 #include<stdlib.h> 
 #include<string.h>
-#include"matriz.h"
-#include"grafos.h"
+#include<math.h>
+#include"bibflores.h"
 
-#define NUM_OBSERVACOES 150
-#define NUM_ATRIBUTOS 4
+
+
 
 int main(int argc, char const *argv[])
 {   
-    Matriz inicial, distancias;
-    Vertex vertices[NUM_OBSERVACOES];
+    Vertice dados_csv[NUM_OCORRENCIAS];
+    double mat_distancias[NUM_OCORRENCIAS][NUM_OCORRENCIAS];
+    double max=0, min=2048;
 
-    inicializa_matriz(&inicial, NUM_OBSERVACOES, NUM_ATRIBUTOS);
-    
     // Abre o iris_dataset CSV para leitura
     FILE *iris_dataset = fopen("IrisDataset.csv", "r");
-
-    //Um testezinho caso o iris_dataset estiver vazio
     if (iris_dataset == NULL) {
         perror("Erro ao abrir o iris_dataset");
         return 1;
     }
 
-    // Define um buffer para armazenar cada linha do iris_dataset
-    char linha[256]; 
+    //tira linha de labels do iris_dataset
+    char str[128];
+    fgets(str, sizeof(str), iris_dataset);
 
-    //remove a primeira linha que só tem labbles
-    fgets(linha, sizeof(linha), iris_dataset);
-
-    // Loop para ler e processar cada linha do iris_dataset
-    int i = 0;
-    while (fgets(linha, sizeof(linha), iris_dataset)) {
-        // Função strtok para dividir a linha em campos
-        char *token = strtok(linha, ",");
-        for (int j = 0; j < NUM_ATRIBUTOS; j++)
-        {
-            (&inicial)->dados[i][j] = atof(token);
-            token = strtok(NULL, ",");
-        }
-        i++;
+    // Le os dados do arquivo CSV
+    for (int i = 0; i < NUM_OCORRENCIAS; i++) {
+        fscanf(iris_dataset, "%s", str );
+        char *pt;
+        pt = strtok(str, ",");
+        dados_csv[i].petal_length = atof(pt);
+        pt = strtok (NULL, ",");
+        dados_csv[i].petal_width = atof(pt);
+        pt = strtok (NULL, ",");
+        dados_csv[i].sepal_length = atof(pt);
+        pt = strtok (NULL, ",");
+        dados_csv[i].sepal_width = atof(pt);
     }
-
-    // Fecha o iris_dataset quando parar de usar ele
     fclose(iris_dataset);
 
-    // Inicializar o grafo com zeros
-    int graph[NUM_OBSERVACOES][NUM_OBSERVACOES] = {0};
+    //preenche a matriz de distancias
+    for (int i = 0; i < NUM_OCORRENCIAS; i++)
+    {
+        for (int j = i; j < NUM_OCORRENCIAS; j++)
+        {
+            double var_auxiliar = distancia_euclidiana(dados_csv[i], dados_csv[j]);
+            mat_distancias[i][j] = var_auxiliar;
+            mat_distancias[j][i] = var_auxiliar;
 
-    // Criar as arestas com base na distância euclideana normalizada ao quadrado
-    for (int i = 0; i < NUM_OBSERVACOES; i++) {
-        for (int j = i + 1; j < NUM_OBSERVACOES; j++) {
-            add_aresta(graph, vertices, i, j);
+            //maximo e minimo para normalizacao
+            if (max < var_auxiliar)
+            {
+                max = var_auxiliar;
+            }else if (min > var_auxiliar)
+            {
+                min = var_auxiliar;
+            }
         }
     }
 
-    // Salvar o grafo em um arquivo TXT
-    salva_grafo(graph);
+    //normaliza a matriz de distancias
+    for (int i = 0; i < NUM_OCORRENCIAS; i++)
+    {
+        for (int j = 0; j < NUM_OCORRENCIAS; j++)
+        {
+            mat_distancias[i][j] = (mat_distancias[i][j] - min ) / (max-min);
+        }
+        
+    }
+    
+    // Inicializar o grafo com zeros
+    int grafo[NUM_OCORRENCIAS][NUM_OCORRENCIAS] = {0};
+    
 
+    for (int i = 0; i < NUM_OCORRENCIAS; i++)
+    {
+        for (int j = 0; j < NUM_OCORRENCIAS; j++)
+        {
+            if (mat_distancias[i][j] <= (0.3))
+            {
+                grafo[i][j] +=1;
+            }   
+        }
+    }
 
-    libera_matriz(&inicial);
+    for(int i = 0 ; i < NUM_OCORRENCIAS ; i++ ){
+		for(int j = 0 ; j < NUM_OCORRENCIAS ; j++ ){
+			printf("%4d ", grafo[i][j]);
+		}
+  	printf("\n");
+	  }
+	  printf("\n");
 
     return 0;
 }
+
