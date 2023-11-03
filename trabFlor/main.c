@@ -88,13 +88,15 @@ int main(int argc, char const *argv[])
     int num_arestas = 0;
     for (int i = 0; i < NUM_OCORRENCIAS; i++)
     {
-        for (int j = i; j < NUM_OCORRENCIAS; j++)
+        for (int j = 0; j < NUM_OCORRENCIAS; j++)
         {
+            printf("%d, ", grafo[i][j]);
             if (grafo[i][j] != 0)
             {
                 num_arestas += 1;     
             }
         }
+        printf("\n");
     }
 
     //cria um vetor e armazena a lista de adjacencias
