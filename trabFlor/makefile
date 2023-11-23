@@ -1,4 +1,7 @@
-run: final
+run: grafo.py
+	python3 grafo.py  
+
+grafo.py: final
 	./final
 
 final: main.c bibflores.o 

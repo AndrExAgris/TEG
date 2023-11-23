@@ -40,7 +40,7 @@ int main(int argc, char const *argv[])
     //preenche a matriz de distancias
     for (int i = 0; i < NUM_OCORRENCIAS; i++)
     {
-        for (int j = i; j < NUM_OCORRENCIAS; j++)
+        for (int j = i+1; j < NUM_OCORRENCIAS; j++)
         {
             double var_auxiliar = distancia_euclidiana(dados_csv[i], dados_csv[j]);
             mat_distancias[i][j] = var_auxiliar;
@@ -76,7 +76,7 @@ int main(int argc, char const *argv[])
     {
         for (int j = 0; j < NUM_OCORRENCIAS; j++)
         {
-            if (mat_distancias[i][j] <= (0.3))
+            if (mat_distancias[i][j] <= (0.2))
             {
                 grafo[i][j] +=1;
             }   
@@ -88,7 +88,7 @@ int main(int argc, char const *argv[])
     int num_arestas = 0;
     for (int i = 0; i < NUM_OCORRENCIAS; i++)
     {
-        for (int j = 0; j < NUM_OCORRENCIAS; j++)
+        for (int j = i+1; j < NUM_OCORRENCIAS; j++)
         {
             printf("%d, ", grafo[i][j]);
             if (grafo[i][j] != 0)
@@ -104,7 +104,7 @@ int main(int argc, char const *argv[])
     int aux=0;
     for (int i = 0; i < NUM_OCORRENCIAS; i++)
     {
-        for (int j = i; j < NUM_OCORRENCIAS; j++)
+        for (int j = i+1; j < NUM_OCORRENCIAS; j++)
         {
             if (grafo[i][j] != 0)
             {
