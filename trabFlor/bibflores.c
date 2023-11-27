@@ -25,3 +25,16 @@ void salva_arquivo_arestas(int quantidade, Aresta lista[quantidade]){
     }
 }
 
+void salva_arquivo_cluster(int quantidade, Aresta lista[quantidade]){
+	FILE *file = fopen("Cluster.txt", "w");
+    if (file == NULL) {
+        perror("Erro ao criar arquivo");
+        exit(1);
+    }
+
+    fprintf(file, "%d\n", quantidade);
+    for (int i = 0; i < quantidade; i++) {
+        fprintf(file, "%d, %d\n", lista[i].verticea, lista[i].verticeb); 
+    }
+}
+

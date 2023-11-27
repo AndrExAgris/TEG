@@ -19,3 +19,5 @@ typedef struct {
 } Aresta;
 
 void salva_arquivo_arestas(int quantidade, Aresta lista[quantidade]);
+void salva_arquivo_cluster(int quantidade, Aresta lista[quantidade]);
+
