@@ -283,6 +283,29 @@ int main(int argc, char const *argv[])
     }
 
     salva_arquivo_cluster(num_arestas_cluster, arestas_cluster);
+
+    int VerdAA = 0, FalAB = 0, FalAC = 0;
+    int FalBA = 0, VerdBB = 0, FalBC = 0;
+    int FalCA = 0, FalCB = 0, VerdCC = 0;
+
+
+    for (int i = 0; i < 50; i++)
+    {
+        if (clusterA[i] < 50) VerdAA +=1;
+        if (clusterA[i] >= 50 && clusterA[i] < 100) FalAB +=1;
+        if (clusterA[i] >= 100) FalAC +=1;
+        if (clusterB[i] < 50) FalCA +=1;
+        if (clusterB[i] >= 50 && clusterB[i] < 100) FalCB +=1;
+        if (clusterB[i] >= 100) VerdCC +=1;
+        if (clusterC[i] < 50) FalBA +=1;
+        if (clusterC[i] >= 50 && clusterC[i] < 100) VerdBB +=1;
+        if (clusterC[i] >= 100) FalBC +=1;
+    }
+    
+    printf("x A B C\n");
+    printf("A %d %d %d\n", VerdAA, FalAB, FalAC);
+    printf("B %d %d %d\n", FalBA, VerdBB, FalBC);
+    printf("C %d %d %d\n", FalCA, FalCB, VerdCC);
     
     return 0;
 }
