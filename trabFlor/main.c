@@ -10,7 +10,7 @@ int main(int argc, char const *argv[])
     Vertice dados_csv[NUM_OCORRENCIAS];
     double mat_distancias[NUM_OCORRENCIAS][NUM_OCORRENCIAS];
     double max=0, min=2048;
-    double limiar = 0.3;
+    double limiar = 0.2;
 
 
     // Abre o iris_dataset CSV para leitura
